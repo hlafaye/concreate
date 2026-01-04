@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Banniere header -->
+<div class="home-hero">
+    <div class="hero-content justify-content-center">
+
+        <p class="hero-mantra cormorant ">Designed as a permanent objects.</p>
+    </div>
+</div>
+
+
+<!-- content -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<section class="about-us py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="font-weight-bold mb-4">About Concreate</h2>
+                <p class="text-muted mb-4">
+                    Concreate designs objects intended to last.</p>
+                <p class="text-muted mb-4">
+                We explore mass, material, and silence through furniture shaped by architectural principles. Each piece is conceived as
+                a permanent object — functional, restrained, and uncompromising.</p>
+                <p class="text-muted mb-4">
+                Our work sits between design and structure, where form follows intention rather than trend.</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="product-title">Our Mission</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle me-2 product-desc"></i>Permanent objects</li>
+                            <li><i class="bi bi-check-circle me-2 product-desc"></i>Architectural furniture</li>
+                            <li><i class="bi bi-check-circle me-2 product-desc"></i>Material-driven design</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="product-title">Our Vision</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-bullseye me-2 product-desc"></i>Furniture beyond trends</li>
+                            <li><i class="bi bi-bullseye me-2 product-desc"></i>Objects that age, not expire</li>
+                            <li><i class="bi bi-bullseye me-2 product-desc"></i>Design rooted in structure</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-dark w-50 mb-2">Explore the collection</a>
+            </div>
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='assets/img/atelier_prev.png') }}?v=1.0"
+                    alt="About Us" class="img-fluid rounded shadow">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='assets/icons/wheel_icon.png') }}?v=1.0" class="about-icon mb-2">
+                    <h2 class="fw-bold">6+</h2>
+                    <p class="text-muted">Years of design exploration</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='assets/icons/brick_icon.png') }}?v=1.0" class="about-icon mb-2">
+                    <h2 class="fw-bold">20+</h2>
+                    <p class="text-muted">Prototypes produced</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='assets/icons/triangle_icon.png') }}?v=1.0" class="about-icon mb-2">
+                    <h2 class="fw-bold">3</h2>
+                    <p class="text-muted">Core materials</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='assets/icons/cube_icon.png') }}?v=1.0" class="about-icon mb-2">
+                    <h2 class="fw-bold">1</h2>
+                    <p class="text-muted">Design philosophy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

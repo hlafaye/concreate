@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Banniere header -->
+    <div class="home-hero">
+        <div class="hero-content justify-content-center">
+    
+            <p class="hero-mantra cormorant ">Designed as a permanent objects.</p>
+        </div>
+    </div>
+
+<!-- products -->
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-4">
+  
+            <div class="card product-card h-100">
+
+                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" 
+                class="card-img-top product-img alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title product-title">Concreation pit</h5>
+                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">7 199</span><span class="cents">.99</span>
+                    </div>
+                    
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
+                        <button class="btn btn-outline-secondary w-100">Quick View</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- products -->
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card product-card h-100">
+
+                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" class="card-img-top product-img
+                    alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title product-title">Concreation pit</h5>
+                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">7 199</span><span class="cents">.99</span>
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
+                        <button class="btn btn-outline-secondary w-100">Quick View</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- products -->
+    <div class="col-12 col-md-6 col-lg-4">
+ 
+        <div class="card product-card h-100">
+
+                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" class="card-img-top product-img
+                    alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title product-title">Concreation pit</h5>
+                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">7 199</span><span class="cents">.99</span>
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
+                        <button class="btn btn-outline-secondary w-100">Quick View</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+{% endblock %}

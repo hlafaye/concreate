@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Banniere header -->
+<div class="home-hero">
+    <div class="hero-content justify-content-center">
+
+        <p class="hero-mantra cormorant ">Designed as a permanent objects.</p>
+    </div>
+</div>
+
+<!-- content -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="contact-form">
+                <h2 class="mb-4 card-title ">Contact Us</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label product-desc ">Your Name</label>
+                        <input type="text" class="form-control card-text " id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label product-desc ">Your Email</label>
+                        <input type="email" class="form-control card-text " id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label product-desc ">Your Message</label>
+                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 mb-2 card-text ">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}
+
+ 

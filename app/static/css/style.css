@@ -1,0 +1,238 @@
+/* title fonts  */
+ 
+.badeen-display-regular {
+    font-family: "Badeen Display", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.cormorant {
+    font-family: "Cormorant", serif;
+    font-optical-sizing: auto;
+    font-weight:700;
+    font-style: italic;
+    
+}
+
+/* mantra home header */
+.hero-mantra {
+    font-size: clamp(0.75rem, 3vw, 2rem) !important;
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.02em;
+}
+
+.hero-mantra {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+.home-hero {
+    display: flex;
+    align-items: center;
+    /* centre vertical */
+    justify-content: center;
+    /* centre horizontal */
+    text-align: center;
+}
+.home-hero {
+    position: relative;
+    height: 320px;
+    background-image: url("/static/assets/img/background_home_croped.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    position: relative;
+    margin-left: 2rem;
+    color: white;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.home-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+/* navbar */
+.nav-link,
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+}
+
+.nav-icon-bag {
+    height: 1.4rem;
+    color: #222;
+    opacity: 0.8;
+}
+
+.nav-icon-pers {
+    height: 1.6rem;
+    color: #222;
+    opacity: 0.8;
+}
+
+.nav-icon:hover {
+    opacity: 1;
+}
+
+/* icon footer link "C" */
+.brand-icon {
+    height: 80px;
+    /* contrôle la taille */
+    width: auto;
+    display: block;
+}
+
+
+/* card style */
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.rating {
+    color: #ffc107;
+}
+
+.price {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.currency,
+.cents {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.product-image {
+    background: #f4f3f1;
+    padding: 24px;
+}
+
+.product-image img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.product-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    
+}
+
+.product-desc {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.product-meta span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    margin-right: 8px;
+}
+.card:hover img {
+    transform: scale(1.03);
+}
+
+.card img {
+    transition: transform 0.4s ease;
+}
+
+.product-card {
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.product-img {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: #f4f4f4;
+}
+
+
+/* about */
+.about-us {
+    background-color: #f8f9fa;
+}
+
+.about-us img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-us img:hover {
+    transform: scale(1.05);
+}
+
+.about-us .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+.about-us .btn-primary {
+    transition: all 0.3s ease;
+}
+
+.about-us .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-icon {
+    height: 5rem;
+    color: #222;
+    opacity: 0.8;
+}
+/* contact */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.contact-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.contact-form label {
+    font-weight: 700;
+}
+
+.contact-form .form-control {
+    border-radius: 5px;
+}
+
+.contact-form textarea {
+    resize: none;
+}
