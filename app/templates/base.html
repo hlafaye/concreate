@@ -28,13 +28,15 @@
         <div class="container">
 
             <div class="d-flex flex-wrap align-items-baseline justify-content-center justify-content-lg-start">
-                <h2 class="d-flex mb-2 mb-lg-0 badeen-display-regular me-4">
+
+                <a href="{{ url_for('pages.home') }}"  class="brand-link">
+                    <h2  class="d-flex mb-2 mb-lg-0 badeen-display-regular me-4">
                     Concreate
-                </h2>
+                </h2></a>
                   
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ml-12">
-                    <li><a href="{{ url_for('pages.about') }}" class="nav-link px-2 link-secondary">About</a></li>
+                    <li><a href="{{ url_for('pages.about') }}" class="nav-link px-2 link-body-emphasis">About</a></li>
                     <li><a href="{{ url_for('pages.contact') }}" class="nav-link px-2 link-body-emphasis">Contact</a></li>
                     <li><a href="{{ url_for('pages.home') }}" class="nav-link px-2 link-body-emphasis">Products</a></li>
                 </ul>
@@ -42,10 +44,10 @@
                         class="form-control" placeholder="Search..." aria-label="Search"> 
                 </form>
                 <div class="d-flex gap-3 align-items-baseline">
-                    <a href="/cart" >
+                    <a href="{{ url_for('cart.cart_view') }}" >
                         <img src="{{ url_for('static', filename='assets/icons/bag.svg') }}?v=1.0" class="nav-icon-bag">
                     </a>
-                    <a href="/account">
+                    <a href="{{ url_for('auth.login') }}">
                         <img src="{{ url_for('static', filename='assets/icons/person.svg') }}?v=1.0" class="nav-icon-pers">
                     </a>
                 </div>
@@ -53,6 +55,20 @@
             </div>
         </div>
     </header>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="container mt-3">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show"
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
    
 
             <main>
@@ -103,6 +119,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        
 <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 
 </body >

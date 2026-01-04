@@ -1,3 +1,5 @@
+
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -13,80 +15,39 @@
 <!-- products -->
 <div class="container mt-5">
     <div class="row g-4">
+        {% for prod in products%}
         <div class="col-12 col-md-6 col-lg-4">
-  
             <div class="card product-card h-100">
-
-                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" 
+                <img src="{{ url_for('static', filename=prod.img_path.split(';')[0]) }}" 
                 class="card-img-top product-img alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title product-title">Concreation pit</h5>
-                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title product-title">{{ prod.name}}</h5>
+                    <p class="card-text product-desc flex-grow-1 ">{{prod.desc}}</p>
                     <div class="price">
-                        <span class="currency">$</span>
-                        <span class="amount">7 199</span><span class="cents">.99</span>
-                    </div>
-                    
-                    
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
-                        <button class="btn btn-outline-secondary w-100">Quick View</button>
+                        {% set s = "%.2f"|format(prod.price) %}
+                        {% set parts = s.split('.') %}
                         
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">{{ parts[0] }}</span><span class="cents">.{{ parts[1] }}</span>
+                        </div>
+
+                    </div>
+                    <div class="d-grid gap-2 mt-auto">
+                        <form action="{{ url_for('cart.add_to_cart', product_id=prod.id) }}" method="POST">
+                            <button type="submit" class="btn btn-dark w-100 mb-2">
+                                Add to Cart
+                            </button>
+                        </form>                        
+                        <a href="{{ url_for('pages.product', product_id=prod.id) }}" class="btn btn-outline-secondary w-100">
+                            Quick View</a>       
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
 
-
-    <!-- products -->
-    <div class="col-12 col-md-6 col-lg-4">
-        <div class="card product-card h-100">
-
-                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" class="card-img-top product-img
-                    alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title product-title">Concreation pit</h5>
-                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
-                    <div class="price">
-                        <span class="currency">$</span>
-                        <span class="amount">7 199</span><span class="cents">.99</span>
-                    </div>
-
-
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
-                        <button class="btn btn-outline-secondary w-100">Quick View</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    <!-- products -->
-    <div class="col-12 col-md-6 col-lg-4">
- 
-        <div class="card product-card h-100">
-
-                <img src="{{ url_for('static', filename='assets/products/prod_1_1.png') }}" class="card-img-top product-img
-                    alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title product-title">Concreation pit</h5>
-                    <p class="card-text product-desc">The heaviest couch, high precision molding, high quality tissus.</p>
-                    <div class="price">
-                        <span class="currency">$</span>
-                        <span class="amount">7 199</span><span class="cents">.99</span>
-                    </div>
-
-
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-dark w-100 mb-2">Add to Cart</button>
-                        <button class="btn btn-outline-secondary w-100">Quick View</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 </div>
 
 

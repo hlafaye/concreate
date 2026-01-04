@@ -15,6 +15,25 @@
     
 }
 
+
+/* bouton ovveride */
+.btn-primary {
+    background-color: #111;
+    border-color: #111;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #000;
+    border-color: #000;
+}
+.btn-dark {
+    background: #111;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
 /* mantra home header */
 .hero-mantra {
     font-size: clamp(0.75rem, 3vw, 2rem) !important;
@@ -92,6 +111,15 @@ body {
 
 .nav-icon:hover {
     opacity: 1;
+}
+
+.brand-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand-link:hover {
+    color: inherit;
 }
 
 /* icon footer link "C" */
@@ -235,4 +263,41 @@ body {
 
 .contact-form textarea {
     resize: none;
+}
+
+
+/* product page */
+
+.product-image {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    opacity: 1;
+}
+
+/* cart page */
+.cart-item img {
+    max-width: 100px;
+    height: auto;
+}
+
+.quantity-input {
+    width: 50px;
+}
+
+.cart-summary {
+    background-color: #f8f9fa;
+    border-radius: 10px;
 }

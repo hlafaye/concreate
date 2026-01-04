@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Images -->
+        <div class="col-md-6 mb-4">
+            <img src="{{ url_for('static', filename=product.img_path.split(';')[0].strip()) }}"
+                alt="Product" class="img-fluid rounded mb-3 product-image" id="mainImage">
+            <div class="d-flex justify-content-between">
+                {% for img in product.img_path.split(';') %}
+                {% set img = img.strip() %}
+                <img src="{{ url_for('static', filename=img) }}" alt="Thumbnail" class="thumbnail rounded"
+                    onclick="changeImage(event, this.src)">
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <h2 class="mb-3">{{product.name}}</h2>
+            <p class="text-muted mb-4">SKU: {{product.sku}}</p>
+            <div class="mb-3">
+                {% set s = "%.2f"|format(product.price) %}
+                {% set parts = s.split('.') %}
+                <span class=" currency">$</span>
+                <span class="h4  amount ">{{ parts[0] }}</span>
+                <span class="  me-2 cents">.{{ parts[1] }}</span>
+            </div>
+            
+            <p class="mb-4">{{product.desc}}</p>
+            <div class="mb-4">
+                
+            </div>
+            <div class="mb-4">
+                <label for="quantity" class="form-label">Quantity:</label>
+                <input type="number" class="form-control" id="quantity" name="qty" value="1" min="1" style="width: 80px;">
+
+            </div>
+            <form action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" method="POST">
+                <button type="submit" class="btn btn-dark  mb-3">
+                    Add to Cart
+                </button>
+            </form>
+            <!-- <button class="btn btn-outline-secondary btn-lg mb-3">
+                <i class="bi bi-heart"></i> Add to Wishlist
+            </button>  -->
+            <div class="mt-4">
+                <h5>Key Features:</h5>
+                <ul>
+                    {% for feat in product.features.split(';')[:-1:] %}
+                    <li>{{feat}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function changeImage(event, src) {
+        document.getElementById('mainImage').src = src;
+        document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+</script>
+{% endblock %}

@@ -4,20 +4,63 @@ from flask_bootstrap import Bootstrap5
 import os
 from dotenv import load_dotenv
 from .models import User
+import click
+from app.seed import seed_products_from_excel
+from pathlib import Path
+from flask.cli import with_appcontext 
+from werkzeug.security import generate_password_hash
 
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
+    Path(app.instance_path).mkdir(parents=True, exist_ok=True)
+
     # app.config.from_envvar("FLASK_CONFIG", silent=True)
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret")
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:////{app.instance_path}/concreate.db'
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{Path(app.instance_path) / 'app.db'}"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-
-    Bootstrap5(app)
     # init extensions
+    Bootstrap5(app)
     db.init_app(app)
     login_manager.init_app(app)
+
+
+    @app.cli.command("init-db")
+    def init_db():
+        from app import models
+        db.create_all()
+        click.echo("✅ DB initialized")
+
+
+    @app.cli.command("seed-products")
+    @click.argument("path", required=False)
+    def seed_products_cmd(path=None):
+        seed_products_from_excel(path or "app/data/products.xlsx")
+        click.echo("✅ Products seeded")
+
+        
+    @app.cli.command("create-admin")
+    @click.argument("email")
+    @click.argument("password")
+    @with_appcontext
+    def create_admin(email, password):
+        user = db.session.execute(db.select(User).where(User.email == email)).scalar_one_or_none()
+        if user:
+            user.role = "admin"
+        else:
+            user = User(
+                email=email,
+                name="Admin",
+                password=generate_password_hash(password, method="pbkdf2:sha256", salt_length=8),
+                role="admin",
+            )
+            db.session.add(user)
+        db.session.commit()
+        click.echo("✅ Admin ready")
+
+    
 
     
     @login_manager.user_loader
