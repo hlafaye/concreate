@@ -105,11 +105,7 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    # auto init db for demo
-
-    if os.getenv("DEMO_SEED") == "1":
-        from app.models import Product
-        if not Product.query.first():          # garde-fou
+        if os.getenv("DEMO_SEED") == "1":
             from app.seed import run_demo_seed
             run_demo_seed()
 
