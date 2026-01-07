@@ -4,11 +4,9 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 from werkzeug.security import generate_password_hash
-
-# ---- adapte ces imports à ton projet ----
-
 from app.extensions import db
-from app.models import User, Product, Order, OrderItem  # ajuste les noms
+from app.models import User, Product, Order, OrderItem
+from sqlalchemy import text
 # ----------------------------------------
 
 
@@ -161,18 +159,6 @@ def seed_orders(users, products, n=18):
 
     db.session.commit()
 
-def main():
-    app = create_app()
-    reset_db(app)
-
-    with app.app_context():
-        users = seed_users()
-        products = seed_products()
-        seed_orders(users, products, n=22)
-
-        print("✅ DB seeded.")
-        print("Admin: admin@admin.com / admin")
-        print("User : user@user.com / test")
 
 
 def run_demo_seed():

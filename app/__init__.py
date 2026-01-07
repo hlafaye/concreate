@@ -102,8 +102,11 @@ def create_app():
     app.register_blueprint(cart_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
 
+    with app.app_context():
+        db.create_all()
+
     # auto init db for demo
-    
+
     if os.getenv("DEMO_SEED") == "1":
         from app.models import Product
         if not Product.query.first():          # garde-fou
