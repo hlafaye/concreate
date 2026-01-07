@@ -3,7 +3,7 @@ from .extensions import db, login_manager, migrate
 from flask_bootstrap import Bootstrap5
 import os
 from dotenv import load_dotenv
-from .models import User
+from .models import User, Product
 import click
 from app.seed import seed_products_from_excel
 from pathlib import Path
@@ -101,5 +101,13 @@ def create_app():
     app.register_blueprint(shop_bp)
     app.register_blueprint(cart_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
+
+    # auto init db for demo
+    
+    if os.getenv("DEMO_SEED") == "1":
+        from app.models import Product
+        if not Product.query.first():          # garde-fou
+            from app.seed import run_demo_seed
+            run_demo_seed()
 
     return app

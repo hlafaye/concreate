@@ -29,6 +29,15 @@ def reset_db(app):
         db.drop_all()
         db.create_all()
 
+def seed_demo_data(n_orders: int = 22):
+    """
+    Seed demo data ONCE. Safe to call multiple times:
+    - If products already exist, it exits early.
+    """
+    # ✅ garde-fou anti double-seed
+    if Product.query.first():
+        return False  # already seeded
+
 def seed_users():
     admin = User(
         name="Admin",
@@ -167,6 +176,13 @@ def main():
         print("✅ DB seeded.")
         print("Admin: admin@admin.com / admin")
         print("User : user@user.com / test")
+
+
+def run_demo_seed():
+    users = seed_users()
+    products = seed_products()
+    seed_orders(users, products, n=22)
+
 
 if __name__ == "__main__":
     main()
