@@ -301,3 +301,34 @@ body {
     background-color: #f8f9fa;
     border-radius: 10px;
 }
+
+
+/* admin orders list */
+
+/* Admin premium tweaks */
+.bg-light-subtle {
+    background: #f7f7f8 !important;
+}
+
+.card {
+    border-radius: 16px;
+}
+
+.card-header {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.list-group-item {
+    border-radius: 0;
+}
+
+.badge.rounded-pill {
+    padding: .45rem .65rem;
+    font-weight: 600;
+}
+
+.btn,
+.form-select {
+    border-radius: 10px;
+}

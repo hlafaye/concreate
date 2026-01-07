@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+
+
+
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Admin · Dashboard</h1>
+            <div class="text-muted">Recap ventes & paiements</div>
+        </div>
+
+        <form class="d-flex gap-2" method="get">
+            <input type="date" class="form-control" name="from" value="{{ date_from }}">
+            <input type="date" class="form-control" name="to" value="{{ date_to }}">
+            <button class="btn btn-dark">Apply</button>
+        </form>
+    </div>
+
+    <!-- KPI -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="text-muted">Revenue</div>
+                    <div class="fs-3 fw-bold">{{ "%.2f"|format(total_revenue) }} €</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="text-muted">Orders</div>
+                    <div class="fs-3 fw-bold">{{ total_orders }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="text-muted">Avg basket</div>
+                    <div class="fs-3 fw-bold">{{ "%.2f"|format(avg_basket) }} €</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="text-muted">Customers</div>
+                    <div class="fs-3 fw-bold">{{ unique_customers }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">Revenue by day</h5>
+                    </div>
+                    <canvas id="chartDaily" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-2">Payments status</h5>
+                    <canvas id="chartStatus" height="220"></canvas>
+                    <div class="text-muted small mt-2">pending / paid / cancelled</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- orders recap -->
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Orders</h1>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th class="text-end">Total</th>
+                        <th>Status</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in orders %}
+                    <tr data-bs-toggle="collapse" data-bs-target="#order-{{o.id}}" style="cursor:pointer;">
+                        <td class="fw-semibold">{{ o.id }}</td>
+                        <td class="text-muted">{{ o.created_at.strftime("%d %b %Y · %H:%M") if o.created_at else "" }}
+                        </td>
+                        <td>{{ o.email }}</td>
+                        <td class="text-end fw-semibold">{{ "%.2f"|format(o.total) }} €</td>
+                        <td>
+                            {% if o.status == "paid" %}
+                            <span class="badge text-bg-success">paid</span>
+                            {% elif o.status == "cancelled" %}
+                            <span class="badge text-bg-danger">cancelled</span>
+                            {% else %}
+                            <span class="badge text-bg-warning">pending</span>
+                            {% endif %}
+                        </td>
+
+
+
+                        <td class="text-end">
+                            <form class="d-inline-flex gap-2" method="POST"
+                                action="{{ url_for('admin.admin_order_status', order_id=o.id) }}">
+                                <select class="form-select form-select-sm" name="status">
+                                    <option value="pending" {{ "selected" if o.status=="pending" else "" }}>pending
+                                    </option>
+                                    <option value="paid" {{ "selected" if o.status=="paid" else "" }}>paid</option>
+                                    <option value="cancelled" {{ "selected" if o.status=="cancelled" else "" }}>
+                                        cancelled</option>
+                                </select>
+                                <button class="btn btn-sm btn-dark" type="submit">Update</button>
+                            </form>
+                        </td>
+                        <tr class="collapse" id="order-{{o.id}}">
+                            <td colspan="6" class="bg-light">
+                                <div class="p-3">
+                                    <div class="fw-bold mb-2">Items</div>
+                                    <ul class="mb-0">
+
+
+                                        {% for it in o.items %}
+                                        {% set p = products_by_id.get(it.product_id) %}
+                                        {% set img_raw = p.img_path if p else None %}
+                                        
+                                        {# img_path = "a;b;c" => on prend la 1ère image #}
+                                        {% set img = (img_raw.split(';')[0] | trim) if img_raw else None %}
+                                        
+                                    
+                                        <div class="list-group-item border-0 py-3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="ratio ratio-1x1 rounded-3 overflow-hidden border" style="width:64px;">
+                                                    {% if img %}
+                                                    <img src="{{ url_for('static', filename=img) }}" alt="{{ it.name_snapshot }}" style="object-fit:cover; width:100%; height:100%;">
+                                                    {% else %}
+                                                    <div class="d-flex align-items-center justify-content-center bg-body-tertiary text-muted small">
+                                                        No photo
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                        
+                                                <div class="flex-grow-1">
+                                                    <div class="fw-semibold">{{ it.name_snapshot }}</div>
+                                                    <div class="text-muted small">
+                                                        Qty {{ it.qty }} · Unit {{ "%.2f"|format(it.unit_price) }} €
+                                                    </div>
+                                                </div>
+                                        
+                                                <div class="text-end">
+                                                    <div class="fw-bold">{{ "%.2f"|format(it.line_total) }} €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        </div>
+                                        
+                                        <hr class="my-3">
+
+
+
+                                    </ul>
+                                </div>               
+                            </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- chartjs for visualising -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const dailyLabels = {{ daily_labels | tojson }};
+    const dailyTotals = {{ daily_totals | tojson }};
+
+    const statusLabels = {{ status_labels | tojson }};
+    const statusCounts = {{ status_counts | tojson }};
+
+    new Chart(document.getElementById("chartDaily"), {
+        type: "line",
+        data: {
+            labels: dailyLabels,
+            datasets: [{
+                label: "Revenue (€)",
+                data: dailyTotals,
+                tension: 0.3
+            }]
+        },
+        options: {
+            plugins: { legend: { display: true } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    new Chart(document.getElementById("chartStatus"), {
+        type: "doughnut",
+        data: {
+            labels: statusLabels,
+            datasets: [{ data: statusCounts }]
+        },
+        options: {
+            plugins: {
+                legend: { position: "bottom" }
+            }
+        }
+    });
+</script>
+{% endblock %}

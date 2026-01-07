@@ -1,5 +1,5 @@
 from flask import Flask
-from .extensions import db, login_manager
+from .extensions import db, login_manager, migrate
 from flask_bootstrap import Bootstrap5
 import os
 from dotenv import load_dotenv
@@ -20,10 +20,15 @@ def create_app():
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret")
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{Path(app.instance_path) / 'app.db'}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["STRIPE_SECRET_KEY"] = os.getenv("STRIPE_SECRET_KEY", "")
+    app.config["STRIPE_WEBHOOK_SECRET"] = os.getenv("STRIPE_WEBHOOK_SECRET", "")
+    app.config["ADMIN_EMAILS"] = [e.strip().lower() for e in os.getenv("ADMIN_EMAILS","").split(",") if e.strip()]
+
 
     # init extensions
     Bootstrap5(app)
     db.init_app(app)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
 
 

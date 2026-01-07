@@ -1,5 +1,5 @@
 from . import auth_bp
-from flask import abort
+from flask import abort, current_app
 from flask_login import login_user, LoginManager, current_user, logout_user, login_required
 from functools import wraps
 from flask import Flask, abort, render_template, redirect, url_for, flash
@@ -7,7 +7,7 @@ from app.extensions import db
 from app.forms import RegisterFrom, LoginFrom
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
-from app.models import User
+from app.models import User, Order
 
 
 def roles_required(*roles):
@@ -81,8 +81,25 @@ def login():
 @auth_bp.route("/profile/<int:id>")
 def profile(id):
     user = db.session.execute(db.select(User).where(User.email==current_user.email)).scalar_one_or_none()
+    orders = (
+        db.session.execute(
+            db.select(Order)
+              .where(Order.user_id == current_user.id)
+              .order_by(Order.created_at.desc())
+        )
+        .scalars()
+        .all()
+    )
 
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, orders=orders)
+@auth_bp.route("/orders/<int:order_id>")
+@login_required
+def order_detail(order_id):
+    order = db.session.get(Order, order_id)
+    if not order or order.user_id != current_user.id:
+        abort(403)
+    return render_template("order_detail.html", order=order, current_app=current_app)
+
 
 @auth_bp.route('/logout')
 @login_required

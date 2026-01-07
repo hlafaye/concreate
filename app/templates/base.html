@@ -39,7 +39,12 @@
                     <li><a href="{{ url_for('pages.about') }}" class="nav-link px-2 link-body-emphasis">About</a></li>
                     <li><a href="{{ url_for('pages.contact') }}" class="nav-link px-2 link-body-emphasis">Contact</a></li>
                     <li><a href="{{ url_for('pages.home') }}" class="nav-link px-2 link-body-emphasis">Products</a></li>
+                    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <li><a href="{{ url_for('admin.admin_dashboard') }}" class="nav-link px-2 link-body-emphasis">Dashboard</a></li>
+                    {%endif%}
                 </ul>
+                
+                  
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"> <input type="search"
                         class="form-control" placeholder="Search..." aria-label="Search"> 
                 </form>
@@ -74,8 +79,66 @@
             <main>
             {%block content %}{% endblock %}
             </main>
+
+            <!-- DEMO FAB -->
+            <button type="button" class="btn btn-dark shadow-lg position-fixed"
+                style="right: 22px; bottom: 22px; border-radius: 999px; padding: 10px 16px; z-index: 1050;" data-bs-toggle="modal"
+                data-bs-target="#demoModal">
+                Demo
+            </button>
+            
+            <div class="modal fade" id="demoModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Demo access</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+            
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class="fw-bold mb-1">Admin</div>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <code class="flex-grow-1" id="demoAdmin">admin@admin.com / admin</code>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="copyText('demoAdmin')">Copy</button>
+                                </div>
+                            </div>
+            
+                            <div class="mb-3">
+                                <div class="fw-bold mb-1">User</div>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <code class="flex-grow-1" id="demoUser">user@user.com / test</code>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="copyText('demoUser')">Copy</button>
+                                </div>
+                            </div>
+            
+                            <hr>
+            
+                            <div>
+                                <div class="fw-bold mb-1">Stripe test card</div>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <code class="flex-grow-1" id="demoCard">4242 4242 4242 4242 — any future date — any CVC</code>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="copyText('demoCard')">Copy</button>
+                                </div>
+                                <div class="text-muted small mt-2">
+                                    Demo checkout uses Stripe test mode.
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="modal-footer">
+                            <a class="btn btn-outline-dark" href="{{ url_for('auth.login') }}">Go to login</a>
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
     <div class="container">
-        <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+        <footer class="d-flex justify-content-between align-items-start py-5 border-top">
+
             <div class="col mb-3"> 
                 <a href="/" class="navbar-brand d-flex align-items-center">
                     <img src="{{ url_for('static', filename='assets/icons/c_icon_concreate.png') }}" alt="Concreate" class="brand-icon">
@@ -83,37 +146,16 @@
                   
                 <p class="text-body-secondary">© 2026, Concreate</p>
             </div>
-            <div class="col mb-3"></div>
-            <div class="col mb-3">
+            <div class="col mb-"></div>
+            <div class="col mb-3 ms-auto text-end">
                 <h5>Section</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('pages.home') }}" class="nav-link p-0 text-body-secondary">Home</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('pages.contact') }}" class="nav-link p-0 text-body-secondary">Contact</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('pages.about') }}" class="nav-link p-0 text-body-secondary">About</a></li>
                 </ul>
             </div>
-            <div class="col mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
-            <div class="col mb-3">
-                <h5>Section</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
+           
         </footer>
     </div>
 
@@ -121,6 +163,13 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         
 <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+
+<script>
+    function copyText(id) {
+        const t = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(t);
+    }
+</script>
 
 </body >
 
