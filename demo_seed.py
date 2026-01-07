@@ -6,14 +6,11 @@ from decimal import Decimal
 from werkzeug.security import generate_password_hash
 
 # ---- adapte ces imports à ton projet ----
-from app import create_app
+
 from app.extensions import db
 from app.models import User, Product, Order, OrderItem  # ajuste les noms
 # ----------------------------------------
 
-import os
-if os.getenv("DEMO_SEED") != "1":
-    raise SystemExit("Set DEMO_SEED=1 to run this script.")
 
 STATUSES = ["paid", "pending", "cancelled"]
 
@@ -182,7 +179,4 @@ def run_demo_seed():
     users = seed_users()
     products = seed_products()
     seed_orders(users, products, n=22)
-
-
-if __name__ == "__main__":
-    main()
+    return True
