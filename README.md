@@ -1,25 +1,32 @@
-# Concreate – E-commerce demo (Flask)
+# Concreate — E-commerce demo (Flask)
 
-Fake e-commerce project built as a bootcamp final demo project.
+A minimalist brutalist-inspired e-commerce demo built as a bootcamp final project.
+Includes product catalog, cart, checkout flow, and a basic admin dashboard.
+
+## Live demo
+- App: <add-render-url>
+- Admin: <optional>
+- Seeded demo data: included
 
 ## Stack
-- Python / Flask
-- Flask-SQLAlchemy
+- Python 3.11
+- Flask (app factory pattern)
+- Flask-SQLAlchemy + Alembic migrations
 - Flask-Login
 - Bootstrap 5
-- SQLite (dev)
+- SQLite (dev) / Postgres (prod)
 
 ## Features
-- User authentication
-- Product catalog
+- Authentication (login/register)
+- Product catalog + product pages
 - Cart system
 - Orders & order items
-- Admin area (basic)
-- Product seeding from Excel
+- Admin area (basic): manage orders, statuses
+- Product seeding from Excel (demo script)
 
-## Setup
+## Local setup
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python run.py
