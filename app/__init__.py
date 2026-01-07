@@ -106,7 +106,7 @@ def create_app():
         db.create_all()
 
         if os.getenv("DEMO_SEED") == "1":
-            from app.seed import run_demo_seed
+            from demo_seed import run_demo_seed
             run_demo_seed()
 
     return app
